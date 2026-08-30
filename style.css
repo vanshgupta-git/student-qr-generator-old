@@ -1,0 +1,137 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-family: "Poppins", Arial, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+body {
+    background-color: #f5f5f7;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+
+.card {
+    background: #fff;
+    width: 100%;
+    max-width: 340px;
+    padding: 28px 24px;
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+/* Logo image (direct child of .card, before the form) */
+.card > img {
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 12px;
+}
+
+h2 {
+    font-size: 25px;
+    color: #222;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+#registrationForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.upload-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    background: #093b66;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.2s ease;
+}
+
+.upload-btn:hover {
+    background: #06345b;
+}
+
+#fileName {
+    font-size: 12px;
+    color: #999;
+    max-width: 260px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#preview {
+    display: none;
+    width: 140px !important;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid #F8B016;
+    background: #f2f2f2;
+}
+
+#registrationForm input[type="text"],
+#registrationForm input[type="email"] {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 14px;
+    background: #fafafa;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+#registrationForm input:focus {
+    border-color: #F8B016;
+    background: #fff;
+}
+
+#registrationForm input::placeholder {
+    color: #999;
+}
+
+#registrationForm button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 4px;
+    border: none;
+    border-radius: 8px;
+    background: #F8B016;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#registrationForm button[type="submit"]:hover {
+    background: #d9960a;
+}
+
+#idCardCanvas {
+    max-width: 100%;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+
+#downloadContainer {
+    width: 100%;
+    margin-top: 12px;
+}
