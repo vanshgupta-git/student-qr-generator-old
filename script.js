@@ -92,7 +92,7 @@ const CONFIG = {
 
         y: 535,
 
-        fontSize: 27,
+        fontSize: 40,
 
         fontFamily: "Arial",
 
@@ -125,7 +125,7 @@ const CONFIG = {
 
         y: 665,
 
-        fontSize: 27,
+        fontSize: 28,
 
         fontFamily: "Arial",
 
@@ -230,68 +230,35 @@ imageInput.addEventListener("change", function () {
     const file = imageInput.files[0];
 
     if (!file) {
-
         selectedPhoto = null;
-
         preview.style.display = "none";
-
-        fileName.textContent =
-            "No Photo Captured Yet";
-
+        fileName.textContent = "No Photo Captured Yet";
         return;
     }
-
-
-    /* ---------------------------------------------
-       Validate file type
-       --------------------------------------------- */
 
     if (!file.type.startsWith("image/")) {
-
         alert("Please select a valid image.");
-
         imageInput.value = "";
-
         return;
     }
 
-
-    /* ---------------------------------------------
-       Store selected file
-       --------------------------------------------- */
-
     selectedPhoto = file;
-
-
-    /* ---------------------------------------------
-       Show filename
-       --------------------------------------------- */
-
     fileName.textContent = file.name;
 
+    // Use FileReader instead of createObjectURL — avoids
+    // stale blob URLs on mobile after camera app switches focus.
+    const reader = new FileReader();
 
-    /* ---------------------------------------------
-       Show image preview
-       --------------------------------------------- */
-
-    const imageUrl =
-        URL.createObjectURL(file);
-
-    preview.src = imageUrl;
-
-    preview.style.display = "block";
-
-
-    /*
-     * Release temporary URL after image loads.
-     */
-
-    preview.onload = function () {
-
-        URL.revokeObjectURL(imageUrl);
-
+    reader.onload = function (e) {
+        preview.src = e.target.result;
+        preview.style.display = "block";
     };
 
+    reader.onerror = function () {
+        alert("Unable to read the selected photo. Please try again.");
+    };
+
+    reader.readAsDataURL(file);
 });
 
 
@@ -385,18 +352,9 @@ form.addEventListener("submit", async function (event) {
            4. Load intern photo
            ----------------------------------------- */
 
-        const photoUrl =
-            URL.createObjectURL(
-                selectedPhoto
-            );
-
-
-        const internPhoto =
-            await loadImage(photoUrl);
-
-
-        URL.revokeObjectURL(photoUrl);
-
+// preview.src is already a data URL (set via FileReader above),
+// so we can reuse it directly instead of creating a new blob URL.
+const internPhoto = await loadImage(preview.src);
 
         /* -----------------------------------------
            5. Draw complete ID card
