@@ -179,7 +179,7 @@ const CONFIG = {
        https://script.google.com/macros/s/XXXXX/exec
        ----------------------------------------------------- */
 
-    apiUrl: "https://script.google.com/macros/s/AKfycbxv9nhqUjctYSnol5me13aZnVANPLs3rkDZ7LfIzptiV0gyPu4iHdtruR0SSLsdnLdo/exec"
+    apiUrl: "https://script.google.com/macros/s/AKfycbzPnByo_qBnThaICihkV9QxU5OaY_LwKMHDpeh2S2Ywb-3jcdaDcm3aWZH4yb6DzBMd/exec"
 };
 
 
@@ -201,6 +201,9 @@ const preview =
 
 const nameInput =
     document.getElementById("name");
+
+const emailInput =
+    document.getElementById("email");
 
 const canvas =
     document.getElementById("idCardCanvas");
@@ -277,7 +280,8 @@ form.addEventListener("submit", async function (event) {
 
     const name =
         nameInput.value.trim();
-
+    const email =
+        emailInput.value.trim();
 
     /* ---------------------------------------------
        Basic validation
@@ -289,7 +293,10 @@ form.addEventListener("submit", async function (event) {
 
         return;
     }
-
+    if (!email) {
+        alert("Please enter the intern email.");
+        return;
+    }
 
     if (!selectedPhoto) {
 
@@ -319,7 +326,7 @@ form.addEventListener("submit", async function (event) {
            ----------------------------------------- */
 
         generatedInternId =
-            await getNextInternId(name);
+            await getNextInternId(name, email);
 
 
         console.log(
@@ -352,9 +359,9 @@ form.addEventListener("submit", async function (event) {
            4. Load intern photo
            ----------------------------------------- */
 
-// preview.src is already a data URL (set via FileReader above),
-// so we can reuse it directly instead of creating a new blob URL.
-const internPhoto = await loadImage(preview.src);
+        // preview.src is already a data URL (set via FileReader above),
+        // so we can reuse it directly instead of creating a new blob URL.
+        const internPhoto = await loadImage(preview.src);
 
         /* -----------------------------------------
            5. Draw complete ID card
@@ -416,7 +423,7 @@ const internPhoto = await loadImage(preview.src);
    next sequential Intern ID for the given name.
    ========================================================= */
 
-async function getNextInternId(name) {
+async function getNextInternId(name, email) {
 
     const response =
         await fetch(
@@ -445,7 +452,8 @@ async function getNextInternId(name) {
                         "generateInternId",
 
                     name:
-                        name
+                        name,
+                    email: email
 
                 })
             }
